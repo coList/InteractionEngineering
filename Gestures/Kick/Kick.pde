@@ -14,5 +14,7 @@ void draw() {
 
   for (Hand hand : leap.getHands ()) {
     hand.draw();
+    Finger indexFinger = hand.getIndexFinger();
+    println("Joint Index: " + indexFinger.getPositionOfJointTip());
   }
 }
