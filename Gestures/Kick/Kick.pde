@@ -16,5 +16,5 @@ void draw() {
     hand.draw();
     Finger indexFinger = hand.getIndexFinger();
     println("Joint Index: " + indexFinger.getPositionOfJointTip());
-  }
+}
 }
