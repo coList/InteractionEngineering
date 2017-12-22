@@ -13,8 +13,17 @@ class Character {
   
   void render() {
     fill(0);
-    ellipse(x, y, size, size);
+    //noStroke();
+    //lights();
+    translate(width/2- 100, height/2 , 0);
+    sphere(30);
+    translate(-(width/2- 100), -height/2 , 0);
+    
+    translate(width/2, height/2 , 0);
     translate(0,0,z);
+    sphere(30);
+    println("z: " + z);
+    
   }
   
   void setY(float y) {

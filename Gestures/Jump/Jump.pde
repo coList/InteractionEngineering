@@ -9,7 +9,7 @@ boolean usingRightHand = true;
 String rightHand = "Du verwendest die rechte Hand. Drücke Enter zum Wechseln.";
 String leftHand = "Du verwendest die linke Hand. Drücke Enter zum Wechseln.";
 void setup() {
-  size(1600, 1000, OPENGL);
+  size(1600, 1000, P3D);
   character = new Character(width/2, height/2, 0, 50);
   depthTranslation = new DepthTranslation();
   leap = new LeapMotion(this);
