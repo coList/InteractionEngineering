@@ -12,9 +12,6 @@ class Character {
   }
   
   void render() {
-    //fill(0);
-    //noStroke();
-    //lights();
     translate(width/2- 100, height/2 , 0);
     sphere(30);
     translate(-(width/2- 100), -height/2 , 0);
