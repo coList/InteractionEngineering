@@ -1,6 +1,7 @@
 class DepthTranslation {
   int groundPlane = 0;
   int jumpAmplificationFactor = 4;
+  
   void updateDepthPosition(Character character, Hand hand) {
     float zIndex = hand.getIndexFinger().getPosition().z; 
     zIndex -= 60;    
