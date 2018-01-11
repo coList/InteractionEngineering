@@ -46,4 +46,9 @@ class Character {
   void setSpeed(PVector speed) {
     this.speed = speed;
   }
+  
+    void setIsWalking(boolean isWalking) {
+    println(isWalking);
+    this.isWalking = isWalking;
+  }
 }

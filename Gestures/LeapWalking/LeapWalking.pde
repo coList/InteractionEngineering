@@ -4,6 +4,7 @@ import de.voidplus.leapmotion.*;
 LeapMotion leap;
 Character character;
 DirectionChange directionChange;
+Walking walking;
 JumpDepthTranslation jumpDepthTranslation;
 DuckDepthTranslation duckDepthTranslation;
 
@@ -14,6 +15,7 @@ void setup() {
   size(1600, 1000, P3D);
   character = new Character(width/2, height/2, 0, 50);
   directionChange = new DirectionChange();
+  walking = new Walking();
   jumpDepthTranslation = new JumpDepthTranslation();
   duckDepthTranslation = new DuckDepthTranslation();
   leap = new LeapMotion(this);
@@ -33,6 +35,8 @@ void draw() {
   for (Hand hand : leap.getHands ()) {
     if (hand.isLeft() && !usingRightHand || hand.isRight() && usingRightHand) {
       directionChange.setDirection(character, hand);
+      
+      walking.setIsWalking(character, hand);
       jumpDepthTranslation.updateDepthPosition(character, hand);
       
       Arm arm = hand.getArm();
