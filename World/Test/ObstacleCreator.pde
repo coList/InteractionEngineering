@@ -10,6 +10,4 @@ class ObstacleCreator {
       obstacle.render();
     }
   }
-  
-  
 }

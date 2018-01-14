@@ -1,28 +1,43 @@
 class Obstacle {  
   int lane;
-  String obstaclePosition;
+  boolean high;
   int zPos;
+  int boxWidth= 300;
+  int boxHeight= 100;
+  int boxDepth= 50;
 
-  Obstacle(int lane, String obstaclePosition, int zPos) {   
+  Obstacle(int lane, boolean high, int zPos) {   
     this.lane = lane;
-    this.obstaclePosition= obstaclePosition;
+    this.high= high;
     this.zPos = zPos;
-  }
-
+  }  
+  
   void render() {
     pushMatrix();
-    if (obstaclePosition.equals("low")) {
-      translate(calculateXPos(), height/2+200, this.zPos);
-    } else {
+    if (high) {
       translate(calculateXPos(), height/2, this.zPos);
+      
+      //linke Säule
+      pushMatrix();
+      translate(-boxWidth/2+10,175,0);      
+      box(20, 250,50);     
+      popMatrix();
+      
+      //rechte Säule
+      pushMatrix();
+      translate(boxWidth/2-10,175,0);      
+      box(20, 250,50);     
+      popMatrix();
+    } else {
+      translate(calculateXPos(), height/2+250, this.zPos);
     }
-    noStroke();
+    stroke(200,200,200);
     fill(70);
-    box(300, 100, 50);
+    box(boxWidth, boxHeight, boxDepth);
     popMatrix();
   }
   
   int calculateXPos(){
-    return width/2-450+(this.lane*450);
+    return width/2-350+(this.lane*350);
   }
 }
