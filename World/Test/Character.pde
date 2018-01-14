@@ -13,27 +13,35 @@ class Character {
     this.zPos= zPos;
   }
 
-  void initialize() {
-    pushMatrix();
-    translate(this.xPos, this.yPos, this.zPos);
-    rotateZ(PI/2);
-    box( 300, 100, 100);
-    popMatrix();
-  }
-
   void render() {  
     if (!duck) {
+      //Körper
       pushMatrix();
-      translate(this.xPos, this.yPos, this.zPos);
+      translate(this.xPos, this.yPos+50, this.zPos);
       rotateZ(PI/2);
-      box( 300, 100, 100);
-      popMatrix();
-    } else {    
       pushMatrix();      
-      translate(this.xPos, this.yPos+75, this.zPos);
+      box( 200, 100, 100);      
+      popMatrix();
+      popMatrix();
+
+      //Kopf      
+      pushMatrix();
+      translate(this.xPos, this.yPos-100, this.zPos);  
+      sphere(50);      
+      popMatrix();
+    } else {  
+      //Körper
+      pushMatrix();      
+      translate(this.xPos, this.yPos+100, this.zPos);
       scale(1, 0.5, 1);
-      rotateZ(PI/2);       
-      box( 300, 100, 100);      
+      rotateZ(PI/2); 
+      box( 200, 100, 100);      
+      popMatrix();
+      //Kopf
+      pushMatrix();      
+      translate(this.xPos, this.yPos+25, this.zPos);
+      scale(1, 0.5, 1);
+      sphere(50);     
       popMatrix();
     }
   }
