@@ -1,7 +1,7 @@
 class Obstacle {  
   int lane;
   boolean high;
-  int zPos;
+  PVector position; //Position: Mitte des Objektes
   int boxWidth= 300;
   int boxHeight= 100;
   int boxDepth= 50;
@@ -9,13 +9,14 @@ class Obstacle {
   Obstacle(int lane, boolean high, int zPos) {   
     this.lane = lane;
     this.high= high;
-    this.zPos = zPos;
+    position = new PVector(calculateXPos(), 0, zPos);
   }
 
   void render() {
     pushMatrix();
     if (high) {
-      translate(calculateXPos(), height/2, this.zPos);
+      position.y = height/2;
+      translate(position.x, position.y, position.z);
 
       //linke Säule
       pushMatrix();
@@ -29,7 +30,8 @@ class Obstacle {
       box(20, 250, 50);     
       popMatrix();
     } else {
-      translate(calculateXPos(), height/2+250, this.zPos);
+      position.y = height/2 + 250;
+      translate(position.x, position.y, position.z);
     }
     stroke(200, 200, 200);
     fill(70);

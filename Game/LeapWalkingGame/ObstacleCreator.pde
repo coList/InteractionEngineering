@@ -5,9 +5,10 @@ class ObstacleCreator {
     this.obstacles = obstacles;
   }
 
-  void createObstsacles() {
+  void createObstacles() {
     for(Obstacle obstacle: obstacles) {
       obstacle.render();
     }
+    
   }
 }

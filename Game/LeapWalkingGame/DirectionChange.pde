@@ -11,7 +11,7 @@ class DirectionChange {
     direction.rotate(HALF_PI);   //rotate the vector by 90degrees to get the perpendicular vector
     
     direction.normalize();
-    println(direction);
+    //println(direction);
     direction.set(direction.x, direction.z, direction.y);
     
     character.setSpeed(direction);
