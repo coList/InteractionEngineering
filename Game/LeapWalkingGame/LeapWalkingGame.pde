@@ -43,7 +43,7 @@ void setup() {
 void draw() { 
   background(000);
   lights();
-  camera(width/2, height/2, character.cameraEyeZ, width/2, height/2, character.cameraCenterZ, 0, 1, 0);
+  camera(width/2, height/3, character.cameraEyeZ, width/2, height/2, character.cameraCenterZ, 0, 1, 0);
   field.render();
   character.render();
   character.move();
