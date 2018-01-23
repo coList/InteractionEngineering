@@ -22,8 +22,7 @@ void setup() {
   size(1800, 1000, P3D);  
   background(0);  
 
-  obstacleCreator = new ObstacleCreator(fillObstacleList());
-  obstacleCreator2 = new ObstacleCreator(fillObstacleList());
+  obstacleCreator = new ObstacleCreator();
 
   character = new Character(850, height/2+300, 0);
   gui = new GUI();
@@ -69,22 +68,6 @@ void draw() {
       duckDepthTranslation.updateDepthPosition(character, arm);
     }
   }
-}
-
-ArrayList<Obstacle> fillObstacleList() {
-  ArrayList<Obstacle> obstacleList= new ArrayList<Obstacle>();    
-  for (int i=0; i>-10000; i -= 300) {
-    obstacleList.add(new Obstacle(int(random(3)), randomBoolean(), i));
-  }  
-  return obstacleList;
-}
-
-boolean randomBoolean() {
-  int number = int(random(0, 2));
-  if (number==1) {
-    return true;
-  }
-  return false;
 }
 
 void mousePressed() {
