@@ -53,8 +53,6 @@ void draw() {
     character.collisionObstacle(obstacle);
   }
   
-  
-  gui.render(character, field);
 
   for (Hand hand : leap.getHands ()) {
     if (hand.isLeft() && !usingRightHand || hand.isRight() && usingRightHand) {
@@ -67,6 +65,8 @@ void draw() {
       duckDepthTranslation.updateDepthPosition(character, arm);
     }
   }
+  
+  gui.render(character, field);
 }
 
 void mousePressed() {

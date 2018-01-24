@@ -8,7 +8,7 @@ class GUI {
    renderDistance(300, 100, character.position.z, field.totalDistance);
    renderCollisionsCount(800, 100, character.collisionsCount);
    renderSpeed(1100, 100, character.speed.z);
-   renderWalkingDirection(1400, 100, character.speed);
+   renderWalkingDirection(1400, 100, character.direction);
   }
   
   void renderDistance(int x, int y, float currentDistance, int totalDistance) {
@@ -26,7 +26,6 @@ class GUI {
     //baseline Arrow
  
     translate(x, y);
-    //scale(1, -1);  //Pfeil spiegeln, damit er in die richtige Richtung zeigt
     line(0, 0,  (direction.x * multiplier), (direction.z * multiplier));
     
     //pfeilspitzen
@@ -39,7 +38,6 @@ class GUI {
     line(0, 0, -0.5 * direction.x * multiplier, -0.5 * direction.z * multiplier);
     popMatrix();
 
-    //scale(1, -1); //vorherige Skalierung aufheben
     strokeWeight(1);
   }
   

@@ -62,6 +62,11 @@ class Character {
       position.x += speed.x;
       position.z += speed.z;
 
+      if (position.x <= 300 + currentBoxWidth/2) {
+        position.x = 300 + currentBoxWidth/2;
+      } else if (position.x >= width - 300 - currentBoxWidth/2) {
+        position.x = width - 300 - currentBoxWidth/2;
+      }
 
       cameraEyeZ += character.speed.z;
       cameraCenterZ += character.speed.z;
@@ -156,7 +161,7 @@ class Character {
   void setDirection(PVector direction) {
     this.direction = direction;
   }
-  
+
   void calculateSpeed(int speedValue) {
     speed = direction.copy();
     speed.mult(speedValue);
