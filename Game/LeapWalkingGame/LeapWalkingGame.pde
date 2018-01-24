@@ -8,6 +8,8 @@ GUI gui;
 
 LeapMotion leap;
 
+DataPrinter dataPrinter;
+
 //gestures
 DuckDepthTranslation duckDepthTranslation;
 JumpDepthTranslation jumpDepthTranslation;
@@ -15,6 +17,9 @@ DirectionChange directionChange;
 Walking walking;
 
 boolean usingRightHand = true;
+
+boolean dataPrinted = false;
+float time = 0;
 
 
 void setup() {
@@ -35,38 +40,61 @@ void setup() {
   walking = new Walking();
 
   leap = new LeapMotion(this);
+  
+  dataPrinter = new DataPrinter("data.txt");
 }
 
 
 void draw() { 
-  background(000);
-  lights();
-  camera(width/2, height/3, character.cameraEyeZ, width/2, height/2, character.cameraCenterZ, 0, 1, 0);
-  field.render();
-  character.render();
-  character.move();
+  if (!character.reachedEnd()) {
+    background(000);
+    lights();
+    camera(width/2, height/3, character.cameraEyeZ, width/2, height/2, character.cameraCenterZ, 0, 1, 0);
+    field.render();
+    character.render();
+    character.move();
 
-  obstacleCreator.createObstacles();
+    obstacleCreator.createObstacles();
 
 
-  for (Obstacle obstacle : obstacleCreator.obstacles) {
-    character.collisionObstacle(obstacle);
-  }
-  
-
-  for (Hand hand : leap.getHands ()) {
-    if (hand.isLeft() && !usingRightHand || hand.isRight() && usingRightHand) {
-      directionChange.setDirection(character, hand);
-
-      walking.setIsWalking(character, hand);
-      jumpDepthTranslation.updateDepthPosition(character, hand);
-
-      Arm arm = hand.getArm();
-      duckDepthTranslation.updateDepthPosition(character, arm);
+    for (Obstacle obstacle : obstacleCreator.obstacles) {
+      character.collisionObstacle(obstacle);
     }
+
+
+    for (Hand hand : leap.getHands ()) {
+      if (hand.isLeft() && !usingRightHand || hand.isRight() && usingRightHand) {
+        directionChange.setDirection(character, hand);
+
+        walking.setIsWalking(character, hand);
+        jumpDepthTranslation.updateDepthPosition(character, hand);
+
+        Arm arm = hand.getArm();
+        duckDepthTranslation.updateDepthPosition(character, arm);
+      }
+    }
+
+    gui.render(character, field);
+  } else {
+    if (!dataPrinted) {
+      time = millis();
+      dataPrinted = true;
+      
+      dataPrinter.printData("Collisions: " + character.collisionsCount + ";" + "Time: " + time + ";");
+      dataPrinter.saveData();
+    }
+    
+    background(0);
+    noLights();
+    camera();
+    
+    fill(255);
+    textSize(40);
+    text("Finished!", 200, 300);
+    text("Collisions: " + character.collisionsCount, 200, 400);
+    text("Time: " + (int)time/1000 + "s", 200, 500);
+    
   }
-  
-  gui.render(character, field);
 }
 
 void mousePressed() {

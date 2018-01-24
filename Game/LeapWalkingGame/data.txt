@@ -1,0 +1,2 @@
+Collisions: 0;Time: 8270.0;
+Collisions: 0;Time: 6598.0;

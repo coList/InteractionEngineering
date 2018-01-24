@@ -67,10 +67,18 @@ class Character {
       } else if (position.x >= width - 300 - currentBoxWidth/2) {
         position.x = width - 300 - currentBoxWidth/2;
       }
+      
 
       cameraEyeZ += character.speed.z;
       cameraCenterZ += character.speed.z;
     }
+  }
+  
+  boolean reachedEnd() {
+      if (position.z <= -500) {
+        return true;
+      }
+      return false;
   }
 
   void collisionObstacle(Obstacle obstacle) {
