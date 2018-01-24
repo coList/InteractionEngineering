@@ -1,7 +1,6 @@
 import de.voidplus.leapmotion.*;
 
 ObstacleCreator obstacleCreator;
-ObstacleCreator obstacleCreator2;
 Character character;
 Field field;
 GUI gui;

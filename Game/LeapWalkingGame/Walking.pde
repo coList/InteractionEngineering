@@ -5,50 +5,60 @@ class Walking {
   PVector middleFingerOld;
   PVector middleFingerCurrent;
 
-  float nextCalculationTime;
-  float calculationTimeSteps = 100;
-  float walkingStartValue = 2;  //benötigte Abstand zwischen alter und neuer Fingerposition
-  
-  boolean lastIsWalkingValue = false;
+  PVector indexFingerMovementOld;
+  PVector middleFingerMovementOld;
 
+  int changes = 0;
+  boolean printit = false;
+
+  float nextTimer;
   
+  
+
+
   Walking () {
     indexFingerOld = new PVector(0, 0);
     middleFingerOld = new PVector(0, 0);
-    indexFingerCurrent = new PVector(0,0);
-    middleFingerCurrent = new PVector(0,0);
-    nextCalculationTime = calculationTimeSteps;
+    indexFingerCurrent = new PVector(0, 0);
+    middleFingerCurrent = new PVector(0, 0);
+
+    indexFingerMovementOld = new PVector(0, 0);
+    middleFingerMovementOld = new PVector(0, 0);
+
+    nextTimer = millis() + 1000;
   }
-  
+
   void setIsWalking(Character character, Hand hand) {
     indexFingerOld = indexFingerCurrent.copy();
     middleFingerOld = middleFingerCurrent.copy(); //speichere die MiddleFinger Werte der vorherigen Runde in den "Alt"-Werten
-    
+
     indexFingerCurrent = hand.getIndexFinger().getPosition();
     middleFingerCurrent = hand.getMiddleFinger().getPosition(); //hole die aktuellen Positionen von Mittel und Zeigefinger
-    
-    PVector indexFingerMovement = indexFingerCurrent.copy();
-    PVector middleFingerMovement = middleFingerCurrent.copy();
-    
-    indexFingerMovement.sub(indexFingerOld);
-    middleFingerMovement.sub(middleFingerOld);
-    
-    float lengthIndexFingerMovement = indexFingerMovement.mag();
-    float lengthMiddleFingerMovement = middleFingerMovement.mag();  //Berechnet die Länge des Vektors
-    
-    if (lengthIndexFingerMovement >= walkingStartValue && lengthMiddleFingerMovement >= walkingStartValue)  {
-      if (lastIsWalkingValue) {
-       character.setIsWalking(true);
-      }
-      lastIsWalkingValue = true;
-    } else {
-      if (!lastIsWalkingValue) {
-      character.setIsWalking(false);
-      }
-      lastIsWalkingValue = false;
-    }
-    
-    
-  }
 
+    PVector indexFingerMovement = indexFingerCurrent.copy();
+    indexFingerMovement.sub(indexFingerOld);
+    PVector middleFingerMovement = middleFingerCurrent.copy();
+    middleFingerMovement.sub(middleFingerOld);
+
+
+    if (indexFingerMovement.mag() >= 3 && middleFingerMovement.mag() >= 3 && 
+      (indexFingerMovement.y * middleFingerMovement.y < -1 || indexFingerMovement.x * middleFingerMovement.x < -1) ) {
+      character.isWalking = true;
+    } else {
+      character.isWalking = false;
+    }
+
+
+    if (indexFingerMovementOld.y * indexFingerMovement.y < 0) {  //nur in y-Richtung bisher
+      changes++;
+    }
+
+    indexFingerMovementOld = indexFingerMovement.copy();
+
+    if (nextTimer < millis()) {  //prüfe jede Sekunde auf Frequenz zur Geschwindigkeitsbestimmung
+      nextTimer = millis() + 1000;
+      character.calculateSpeed(changes);
+      changes = 0;
+    }
+  }
 }

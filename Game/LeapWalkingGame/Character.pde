@@ -3,6 +3,7 @@ class Character {
   PVector position;  //Mitte der Unterseite
   boolean duck = false;
   boolean jump = true;
+  PVector direction;
   PVector speed;
   int collisionsCount = 0;
   boolean isWalking = false;
@@ -25,7 +26,8 @@ class Character {
     position = new PVector(xPos, yPos, zPos);
     standardPositionY = yPos;
     jumpPositionY = yPos - 200;
-    speed = new PVector(5, 5, 5);
+    speed = new PVector(0, 0, 0);
+    direction = new PVector(0, 0, 0);
   }
 
   void render() {  
@@ -126,21 +128,20 @@ class Character {
     if ((characterLeft < obstacleRight && characterRight > obstacleLeft &&  //Kollision mit Balken
       characterTop < obstacleBottom && characterBottom > obstacleTop &&
       characterFront > obstacleBack && characterBack < obstacleFront) || 
-      
+
       (obstacle.high && characterLeft < pillar1Right && characterRight > pillar1Left &&  //Kollision mit linker Säule
       characterTop < pillar1Bottom && characterBottom > pillar1Top &&
       characterFront > pillar1Back && characterBack < pillar1Front) ||
-      
+
       (obstacle.high && characterLeft < pillar2Right && characterRight > pillar2Left &&  //Kollision mit rechter Säule
       characterTop < pillar2Bottom && characterBottom > pillar2Top &&
       characterFront > pillar2Back && characterBack < pillar2Front)) {
-        
+
       position.z += 150;
       cameraEyeZ += 150;
       cameraCenterZ += 150;
-      
+
       collisionsCount++;
-      
     }
   }
 
@@ -150,6 +151,15 @@ class Character {
 
   void setSpeed(PVector speed) {
     this.speed = speed;
+  }
+
+  void setDirection(PVector direction) {
+    this.direction = direction;
+  }
+  
+  void calculateSpeed(int speedValue) {
+    speed = direction.copy();
+    speed.mult(speedValue);
   }
 
   void setCoordinates(float xPos, float yPos, float zPos) {

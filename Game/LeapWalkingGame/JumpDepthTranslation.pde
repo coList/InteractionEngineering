@@ -10,13 +10,10 @@ class JumpDepthTranslation {
       zIndex = groundPlane;
     }   
     
-    if (zIndex >= 10)  {
+    if (zIndex > 15)  {
       character.jump = true;
     } else {
       character.jump = false;
     }
-    //falls zeige und mittelfinger z-Wert gößer ?(abhängig von laufen) -> dann springen 
-    //println(zIndex);
-    //character.position.z = (zIndex * jumpAmplificationFactor ) ;   
   }
 }

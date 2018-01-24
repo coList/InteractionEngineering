@@ -5,10 +5,10 @@ class GUI {
   void render(Character character, Field field) {
    camera(); //setze den viewport auf 2d zurück
    noLights();   
-   renderDistance(200, 100, character.position.z, field.totalDistance);
-   renderCollisionsCount(1000, 100, character.collisionsCount);
-   renderSpeed(width - 200, 100, character.speed.z);
-   renderWalkingDirection(width - 300, 100, character.speed);
+   renderDistance(300, 100, character.position.z, field.totalDistance);
+   renderCollisionsCount(800, 100, character.collisionsCount);
+   renderSpeed(1100, 100, character.speed.z);
+   renderWalkingDirection(1400, 100, character.speed);
   }
   
   void renderDistance(int x, int y, float currentDistance, int totalDistance) {
@@ -46,7 +46,7 @@ class GUI {
   void renderSpeed(int x, int y, float speed) {
     fill(textColor);
     textSize(textSize);
-    text(-(int)(speed*100) + " m/s", x, y);
+    text(-(int)speed + " m/s", x, y);
   }
   
   void renderCollisionsCount(int x, int y, int collisionsCount) {
