@@ -2,19 +2,19 @@ class GUI {
   int textSize = 40;
   int textColor = 255;
   
-  void render(Character character, Field field) {
+  void render(Character character, Field field, boolean gameStarted) {
    camera(); //setze den viewport auf 2d zurück
    noLights();   
    renderDistance(300, 100, character.position.z, field.totalDistance);
    renderCollisionsCount(800, 100, character.collisionsCount);
-   renderSpeed(1100, 100, character.speed.z);
+   renderSpeed(1100, 100, character.speed.z, gameStarted, character.isWalking, character.autoMovement, character.autoMovementZ);
    renderWalkingDirection(1400, 100, character.direction);
   }
   
   void renderDistance(int x, int y, float currentDistance, int totalDistance) {
     fill(textColor);
     textSize(textSize);
-    text(abs((int)currentDistance) + "m/" + (int)totalDistance + "m", x, y);
+    text(abs((int)(currentDistance/10)) + "m/" + (int)(totalDistance/10) + "m", x, y);
   }
   
   void renderWalkingDirection(int x, int y, PVector walkingDirection) {
@@ -41,9 +41,24 @@ class GUI {
     strokeWeight(1);
   }
   
-  void renderSpeed(int x, int y, float speed) {
+  void renderSpeed(int x, int y, float speed, boolean gameStarted, boolean isWalking, boolean autoMovement, float autoSpeed) {
     fill(textColor);
     textSize(textSize);
+    
+    
+    /*
+    if (isWalking) {
+      speed = 0;
+    }
+    
+    if (autoMovement) {
+      speed = autoSpeed;
+    }
+    */
+    
+    if (!gameStarted) {
+      speed = 0;
+    }
     text(-(int)speed + " m/s", x, y);
   }
   
@@ -51,5 +66,14 @@ class GUI {
     fill(textColor);
     textSize(textSize);
     text(collisionsCount + " Hits", x, y);
+  }
+  
+  
+  void showStarter(float timeLeft) {
+    camera();
+    noLights();
+    fill(textColor);
+    textSize(textSize * 10);
+    text((int)timeLeft/1000, width/3, height * 2/3);
   }
 }

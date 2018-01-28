@@ -22,17 +22,23 @@ boolean dataPrinted = false;
 float time = 0;
 
 
+float startTime = 5000;
+boolean gameStarted = false;
+
+
+
 void setup() {
   size(1800, 1000, P3D);  
   background(0);  
 
-  obstacleCreator = new ObstacleCreator();
+  field = new Field();
+  field.render();
+  obstacleCreator = new ObstacleCreator(field.totalDistance);
 
   character = new Character(850, height/2+300, 0);
   gui = new GUI();
 
-  field = new Field();
-  field.render();
+
 
   duckDepthTranslation = new DuckDepthTranslation();
   jumpDepthTranslation = new JumpDepthTranslation();
@@ -40,26 +46,20 @@ void setup() {
   walking = new Walking();
 
   leap = new LeapMotion(this);
-  
+
   dataPrinter = new DataPrinter("data.txt");
 }
 
 
 void draw() { 
-  if (!character.reachedEnd()) {
+  if (!character.reachedEnd(field.totalDistance)) {
     background(000);
     lights();
     camera(width/2, height/3, character.cameraEyeZ, width/2, height/2, character.cameraCenterZ, 0, 1, 0);
     field.render();
     character.render();
-    character.move();
 
     obstacleCreator.createObstacles();
-
-
-    for (Obstacle obstacle : obstacleCreator.obstacles) {
-      character.collisionObstacle(obstacle);
-    }
 
 
     for (Hand hand : leap.getHands ()) {
@@ -74,26 +74,41 @@ void draw() {
       }
     }
 
-    gui.render(character, field);
+    gui.render(character, field, gameStarted);
+
+
+    if (gameStarted) {
+      character.move();
+
+      for (Obstacle obstacle : obstacleCreator.obstacles) {
+        character.collisionObstacle(obstacle);
+      }
+    } else {
+      float timeLeft = startTime - millis();
+      if (timeLeft < 0) {
+        gameStarted = true;
+      } else {
+        gui.showStarter(timeLeft);
+      }
+    }
   } else {
     if (!dataPrinted) {
       time = millis();
       dataPrinted = true;
-      
+
       dataPrinter.printData("Collisions: " + character.collisionsCount + ";" + "Time: " + time + ";");
       dataPrinter.saveData();
     }
-    
+
     background(0);
     noLights();
     camera();
-    
+
     fill(255);
     textSize(40);
     text("Finished!", 200, 300);
     text("Collisions: " + character.collisionsCount, 200, 400);
     text("Time: " + (int)time/1000 + "s", 200, 500);
-    
   }
 }
 

@@ -1,9 +1,9 @@
 class ObstacleCreator {  
   ArrayList<Obstacle> obstacles;
 
-  ObstacleCreator() {   
+  ObstacleCreator(float totalDistance) {   
     obstacles = new ArrayList<Obstacle>();
-    for (int i=-300; i>-10000; i -= 300) {
+    for (int i=-300; i>-totalDistance; i -= 500) {
       obstacles.add(new Obstacle(int(random(3)), boolean((int)random(0, 2)), i));
     } 
     

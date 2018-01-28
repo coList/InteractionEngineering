@@ -5,6 +5,12 @@ class Character {
   boolean jump = true;
   PVector direction;
   PVector speed;
+  float autoMovementZ = -12;
+  boolean autoMovement = false;
+  float autoMovementStartTime = 0;
+  float autoMovementDuration = 800;
+  float allowJumpDuckAgainTime = 500;
+  boolean allowsJumpDuck = true;
   int collisionsCount = 0;
   boolean isWalking = false;
 
@@ -58,7 +64,16 @@ class Character {
   }
 
   void move() {
-    if (isWalking) {
+    if (autoMovement) {
+      position.z += autoMovementZ;
+      cameraEyeZ += autoMovementZ;
+      cameraCenterZ += autoMovementZ;
+      
+      if (autoMovementStartTime + autoMovementDuration <= millis()) {  //stop jumping, stop ducking
+        autoMovement = false;
+      }
+      
+    } else if (isWalking) {
       position.x += speed.x;
       position.z += speed.z;
 
@@ -71,11 +86,22 @@ class Character {
 
       cameraEyeZ += character.speed.z;
       cameraCenterZ += character.speed.z;
+    } else if ((jump || duck) && !autoMovement) {
+       autoMovement = true;
+       allowsJumpDuck = false;
+       position.z += autoMovementZ;
+      cameraEyeZ += autoMovementZ;
+      cameraCenterZ += autoMovementZ;
+       autoMovementStartTime = millis();
+    }
+    
+    if (autoMovementStartTime + autoMovementDuration + allowJumpDuckAgainTime <= millis()) {
+      allowsJumpDuck = true;
     }
   }
   
-  boolean reachedEnd() {
-      if (position.z <= -500) {
+  boolean reachedEnd(float totalDistance) {
+      if (position.z <= -totalDistance) {
         return true;
       }
       return false;
@@ -172,7 +198,7 @@ class Character {
 
   void calculateSpeed(int speedValue) {
     speed = direction.copy();
-    speed.mult(speedValue);
+    speed.mult(speedValue * 2);
   }
 
   void setCoordinates(float xPos, float yPos, float zPos) {

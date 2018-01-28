@@ -12,8 +12,10 @@ class Walking {
   boolean printit = false;
 
   float nextTimer;
-  
-  
+
+  boolean lastIsWalking;
+
+
 
 
   Walking () {
@@ -41,11 +43,19 @@ class Walking {
     middleFingerMovement.sub(middleFingerOld);
 
 
-    if (indexFingerMovement.mag() >= 3 && middleFingerMovement.mag() >= 3 && 
+    if (indexFingerMovement.mag() >= 2 && middleFingerMovement.mag() >= 2 && 
       (indexFingerMovement.y * middleFingerMovement.y < -1 || indexFingerMovement.x * middleFingerMovement.x < -1) ) {
-      character.isWalking = true;
+      if (lastIsWalking) {
+        character.isWalking = true;
+      } else {
+        lastIsWalking = true;
+      }
     } else {
-      character.isWalking = false;
+      if (!lastIsWalking) {
+        character.isWalking = false;
+      } else {
+        lastIsWalking = false;
+      }
     }
 
 

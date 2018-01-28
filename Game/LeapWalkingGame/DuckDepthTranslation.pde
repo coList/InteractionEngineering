@@ -3,18 +3,20 @@ class DuckDepthTranslation {
   int duckAmplificationFactor = 4;
 
   void updateDepthPosition(Character character, Arm arm) {
-    float zIndex = arm.getWristPosition().z; 
+    if (!character.autoMovement) {
+      float zIndex = arm.getWristPosition().z; 
 
-    zIndex -= 60;   
-    zIndex = -zIndex;
-     
-    if (zIndex <=groundPlane) { //Abfangen von negativem Ducken
-      zIndex = groundPlane;
-    }     
-    if (zIndex <= 15) {
-      character.duck = true;
-    } else {
-      character.duck = false;
+      zIndex -= 60;   
+      zIndex = -zIndex;
+
+      if (zIndex <=groundPlane) { //Abfangen von negativem Ducken
+        zIndex = groundPlane;
+      }     
+      if (zIndex <= 15 && character.allowsJumpDuck) {
+        character.duck = true;
+      } else {
+        character.duck = false;
+      }
     }
   }
 }
