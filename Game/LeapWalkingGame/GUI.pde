@@ -74,6 +74,6 @@ class GUI {
     noLights();
     fill(textColor);
     textSize(textSize * 10);
-    text((int)timeLeft/1000, width/3, height * 2/3);
+    text((int)timeLeft/1000, 100, height * 2/3);
   }
 }

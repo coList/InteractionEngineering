@@ -24,6 +24,9 @@ float time = 0;
 
 float startTime = 5000;
 boolean gameStarted = false;
+boolean gameStopped = false;
+
+float releaseStopTime = 0;
 
 
 
@@ -77,18 +80,29 @@ void draw() {
     gui.render(character, field, gameStarted);
 
 
-    if (gameStarted) {
+    if (gameStarted && !gameStopped) {
       character.move();
 
       for (Obstacle obstacle : obstacleCreator.obstacles) {
-        character.collisionObstacle(obstacle);
+        boolean stop = character.collisionObstacle(obstacle);
+        if (stop) {
+          gameStopped = true;
+        }
       }
-    } else {
+
+      if (gameStopped) {
+        releaseStopTime = millis() + 1000;
+      }
+    } else if (!gameStarted) {
       float timeLeft = startTime - millis();
       if (timeLeft < 0) {
         gameStarted = true;
       } else {
         gui.showStarter(timeLeft);
+      }
+    } else {
+      if (releaseStopTime <= millis()) {
+        gameStopped = false;
       }
     }
   } else {
@@ -96,9 +110,10 @@ void draw() {
       time = millis();
       dataPrinted = true;
 
-      dataPrinter.printData("Collisions: " + character.collisionsCount + ";" + "Time: " + time + ";");
+      dataPrinter.printData("Collisions: " + character.collisionsCount + ";" + "Time: " + time + ";" + "Jumps: " + jumpDepthTranslation.jumpCounter + ";" + "Ducks: " + duckDepthTranslation.duckCounter + ";");
       dataPrinter.saveData();
     }
+
 
     background(0);
     noLights();
@@ -126,4 +141,9 @@ void keyPressed() {
   if (keyCode == ENTER) {
     usingRightHand = !usingRightHand;
   }
+}
+
+public void exit() {  //save Data on Window exit
+  dataPrinter.saveData();
+  super.exit();
 }

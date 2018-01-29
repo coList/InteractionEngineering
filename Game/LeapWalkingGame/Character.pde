@@ -107,7 +107,7 @@ class Character {
       return false;
   }
 
-  void collisionObstacle(Obstacle obstacle) {
+  boolean collisionObstacle(Obstacle obstacle) {
     //Character Box linke Seite: position.x - currentBoxWidth/2
     //Character Box rechte Seite: position.x + currentBoxWidth/2
     //Character Box + Sphere obere Seite: positon.y + currentBoxHeight + sphereRadius*2
@@ -181,7 +181,10 @@ class Character {
       cameraCenterZ += 150;
 
       collisionsCount++;
+      
+      return true;
     }
+    return false;
   }
 
   void setIsWalking(boolean isWalking) {

@@ -43,7 +43,7 @@ class Walking {
     middleFingerMovement.sub(middleFingerOld);
 
 
-    if (indexFingerMovement.mag() >= 2 && middleFingerMovement.mag() >= 2 && 
+    if (
       (indexFingerMovement.y * middleFingerMovement.y < -1 || indexFingerMovement.x * middleFingerMovement.x < -1) ) {
       if (lastIsWalking) {
         character.isWalking = true;

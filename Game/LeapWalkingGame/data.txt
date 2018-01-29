@@ -1,5 +1,0 @@
-Collisions: 19;Time: 39920.0;
-Collisions: 6;Time: 36801.0;
-Collisions: 2;Time: 24280.0;
-Collisions: 20;Time: 30830.0;
-Collisions: 1;Time: 22159.0;
