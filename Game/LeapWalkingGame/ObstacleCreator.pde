@@ -3,7 +3,7 @@ class ObstacleCreator {
 
   ObstacleCreator(float totalDistance) {   
     obstacles = new ArrayList<Obstacle>();
-    for (int i=-300; i>-totalDistance; i -= 500) {
+    for (int i=-600; i>-totalDistance; i -= 650) {
       obstacles.add(new Obstacle(int(random(3)), boolean((int)random(0, 2)), i));
     } 
     

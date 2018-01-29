@@ -201,7 +201,7 @@ class Character {
 
   void calculateSpeed(int speedValue) {
     speed = direction.copy();
-    speed.mult(speedValue * 2);
+    speed.mult(speedValue * 3);
   }
 
   void setCoordinates(float xPos, float yPos, float zPos) {

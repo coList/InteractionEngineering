@@ -16,6 +16,11 @@ class Walking {
   boolean lastIsWalking;
 
 
+  float nextCheck = 0;
+
+  float stopCounter = 0;
+
+
 
 
   Walking () {
@@ -31,44 +36,44 @@ class Walking {
   }
 
   void setIsWalking(Character character, Hand hand) {
-    indexFingerOld = indexFingerCurrent.copy();
-    middleFingerOld = middleFingerCurrent.copy(); //speichere die MiddleFinger Werte der vorherigen Runde in den "Alt"-Werten
+    if (nextCheck <= millis()) {
+      indexFingerOld = indexFingerCurrent.copy();
+      middleFingerOld = middleFingerCurrent.copy(); //speichere die MiddleFinger Werte der vorherigen Runde in den "Alt"-Werten
 
-    indexFingerCurrent = hand.getIndexFinger().getPosition();
-    middleFingerCurrent = hand.getMiddleFinger().getPosition(); //hole die aktuellen Positionen von Mittel und Zeigefinger
+      indexFingerCurrent = hand.getIndexFinger().getPositionOfJointTip();
+      middleFingerCurrent = hand.getMiddleFinger().getPositionOfJointTip(); //hole die aktuellen Positionen von Mittel und Zeigefinger
 
-    PVector indexFingerMovement = indexFingerCurrent.copy();
-    indexFingerMovement.sub(indexFingerOld);
-    PVector middleFingerMovement = middleFingerCurrent.copy();
-    middleFingerMovement.sub(middleFingerOld);
+      PVector indexFingerMovement = indexFingerCurrent.copy();
+      indexFingerMovement.sub(indexFingerOld);
+      PVector middleFingerMovement = middleFingerCurrent.copy();
+      middleFingerMovement.sub(middleFingerOld);
 
+      float angleBetweenVectors = degrees(PVector.angleBetween(indexFingerMovement, middleFingerMovement));
 
-    if (
-      (indexFingerMovement.y * middleFingerMovement.y < -1 || indexFingerMovement.x * middleFingerMovement.x < -1) ) {
-      if (lastIsWalking) {
+      if (angleBetweenVectors >= 90 && angleBetweenVectors <= 180) {
+        stopCounter = 0;
         character.isWalking = true;
-      } else {
-        lastIsWalking = true;
+      } else { 
+        if (stopCounter > 2) {
+          character.isWalking = false;
+        }
+        stopCounter++;
       }
-    } else {
-      if (!lastIsWalking) {
-        character.isWalking = false;
-      } else {
-        lastIsWalking = false;
+
+
+      nextCheck = millis() + 200;
+
+      if (indexFingerMovementOld.y * indexFingerMovement.y < 0) {  //nur in y-Richtung bisher
+        changes++;
       }
-    }
 
+      indexFingerMovementOld = indexFingerMovement.copy();
 
-    if (indexFingerMovementOld.y * indexFingerMovement.y < 0) {  //nur in y-Richtung bisher
-      changes++;
-    }
-
-    indexFingerMovementOld = indexFingerMovement.copy();
-
-    if (nextTimer < millis()) {  //prüfe jede Sekunde auf Frequenz zur Geschwindigkeitsbestimmung
-      nextTimer = millis() + 1000;
-      character.calculateSpeed(changes);
-      changes = 0;
+      if (nextTimer < millis()) {  //prüfe jede Sekunde auf Frequenz zur Geschwindigkeitsbestimmung
+        nextTimer = millis() + 1000;
+        character.calculateSpeed(changes);
+        changes = 0;
+      }
     }
   }
 }

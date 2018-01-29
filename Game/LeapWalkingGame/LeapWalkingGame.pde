@@ -28,8 +28,6 @@ boolean gameStopped = false;
 
 float releaseStopTime = 0;
 
-
-
 void setup() {
   size(1800, 1000, P3D);  
   background(0);  
@@ -70,10 +68,16 @@ void draw() {
         directionChange.setDirection(character, hand);
 
         walking.setIsWalking(character, hand);
-        jumpDepthTranslation.updateDepthPosition(character, hand);
+        jumpDepthTranslation.updateDepthPosition(character, hand, gameStopped);
 
         Arm arm = hand.getArm();
-        duckDepthTranslation.updateDepthPosition(character, arm);
+        duckDepthTranslation.updateDepthPosition(character, arm, gameStopped);
+        
+        
+        
+        
+        gui.renderHand(hand);
+        
       }
     }
 
@@ -110,20 +114,12 @@ void draw() {
       time = millis();
       dataPrinted = true;
 
-      dataPrinter.printData("Collisions: " + character.collisionsCount + ";" + "Time: " + time + ";" + "Jumps: " + jumpDepthTranslation.jumpCounter + ";" + "Ducks: " + duckDepthTranslation.duckCounter + ";");
+      dataPrinter.printData("TotalDistance: " + field.totalDistance + ";" + "Collisions: " + character.collisionsCount + ";" + "Time: " + time + ";" + "Jumps: " + jumpDepthTranslation.jumpCounter + ";" + "Ducks: " + duckDepthTranslation.duckCounter + ";");
       dataPrinter.saveData();
     }
 
-
-    background(0);
-    noLights();
-    camera();
-
-    fill(255);
-    textSize(40);
-    text("Finished!", 200, 300);
-    text("Collisions: " + character.collisionsCount, 200, 400);
-    text("Time: " + (int)time/1000 + "s", 200, 500);
+    gui.showEndScreen(character, time);
+   
   }
 }
 
