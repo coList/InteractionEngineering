@@ -36,7 +36,7 @@ void setup() {
   field.render();
   obstacleCreator = new ObstacleCreator(field.totalDistance);
 
-  character = new Character(850, height/2+300, 0);
+  character = new Character(850, height/2+300, 0, obstacleCreator.obstacleDistance, obstacleCreator.obstacleBoxDepth);
   gui = new GUI();
 
 

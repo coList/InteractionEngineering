@@ -28,12 +28,14 @@ class Character {
   float cameraCenterZ = 0;
 
 
-  Character(int xPos, int yPos, int zPos) {  
+  Character(int xPos, int yPos, int zPos, int obstacleDistance, int obstacleDepth) {  
     position = new PVector(xPos, yPos, zPos);
     standardPositionY = yPos;
     jumpPositionY = yPos - 200;
     speed = new PVector(0, 0, 0);
     direction = new PVector(0, 0, 0);
+    
+    calculateAutoMovementSpeed(obstacleDepth, obstacleDistance);
   }
 
   void render() {  
@@ -202,6 +204,12 @@ class Character {
   void calculateSpeed(int speedValue) {
     speed = direction.copy();
     speed.mult(speedValue * 3);
+  }
+  
+  void calculateAutoMovementSpeed(int obstacleDepth, int obstacleDistance) {
+    float jumpingDistance = obstacleDepth + 0.75 * obstacleDistance;
+       
+    autoMovementZ = -1 * jumpingDistance/(autoMovementDuration/1000)/60;  // weg / (zeit in Sekunden) / Frames pro Sekunde = weg pro Frame
   }
 
   void setCoordinates(float xPos, float yPos, float zPos) {

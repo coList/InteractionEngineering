@@ -1,7 +1,1 @@
-TotalDistance: 10000;Collisions: 2;Time: 25792.0;Jumps: 50;Ducks: 30;
-TotalDistance: 10000;Collisions: 11;Time: 46327.0;Jumps: 39;Ducks: 242;
-TotalDistance: 10000;Collisions: 1;Time: 23807.0;Jumps: 3;Ducks: 1;
-TotalDistance: 10000;Collisions: 2;Time: 25196.0;Jumps: 61;Ducks: 105;
-TotalDistance: 10000;Collisions: 0;Time: 21815.0;Jumps: 0;Ducks: 0;
-TotalDistance: 10000;Collisions: 2;Time: 23422.0;Jumps: 4;Ducks: 30;
-TotalDistance: 10000;Collisions: 2;Time: 23556.0;Jumps: 74;Ducks: 1;
+TotalDistance: 10000;Collisions: 3;Time: 31069.0;Jumps: 95;Ducks: 1;

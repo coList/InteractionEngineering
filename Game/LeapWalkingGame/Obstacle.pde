@@ -13,12 +13,13 @@ class Obstacle {
   PVector positionPillar1;
   PVector positionPillar2;
 
-  Obstacle(int lane, boolean high, int zPos) {   
+  Obstacle(int lane, boolean high, int zPos, int boxDepth) {   
     this.lane = lane;
     this.high= high;
     position = new PVector(calculateXPos(), 0, zPos);
     positionPillar1 = new PVector(-boxWidth/2+10, 175, 0);  //position nach dem ersten Translate
     positionPillar2 = new PVector(boxWidth/2-10, 175, 0);  //position nach dem ersten Translate
+    boxDepth = boxDepth;
   }
 
   void render() {
