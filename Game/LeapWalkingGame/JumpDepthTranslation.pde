@@ -7,13 +7,17 @@ class JumpDepthTranslation {
   void updateDepthPosition(Character character, Hand hand, boolean gameStopped) {
     if (!character.autoMovement) {
       float zIndex = hand.getIndexFinger().getPositionOfJointTip().z; 
+      float zMiddle = hand.getMiddleFinger().getPositionOfJointTip().z;
+      
       zIndex -= 60;    
       zIndex = -zIndex;
-      if (zIndex <=groundPlane) { //Abfangen von negativen Sprüngen
-        zIndex = groundPlane;
-      }   
+      
+      zMiddle -= 60;
+      zMiddle = -zMiddle;
+      
+    
 
-      if (zIndex > 20 && character.allowsJumpDuck && !gameStopped) {
+      if (zIndex > 20 && zMiddle > 20 && character.allowsJumpDuck && !gameStopped) {
         character.jump = true;
         jumpCounter++;
       } else {
