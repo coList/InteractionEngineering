@@ -1,6 +1,7 @@
 class Field {  
   int totalDistance = 10000;
   int fieldLength = 30000;
+  int fieldWidth = width - 600;
   void render() {
     pushMatrix();
     rectMode(CENTER);
@@ -9,7 +10,7 @@ class Field {
     translate(0, height/2+300, 0);//nur y
     pushMatrix();
     rotateX(PI/2);  
-    rect(width/2, height/2, width-600, fieldLength); //plane
+    rect(width/2, height/2, fieldWidth, fieldLength); //plane
     popMatrix();
     drawVerticalLines();
     drawHoritontalLines(400);

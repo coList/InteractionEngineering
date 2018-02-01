@@ -1,1 +1,0 @@
-TotalDistance: 10000;Collisions: 3;Time: 31069.0;Jumps: 95;Ducks: 1;
