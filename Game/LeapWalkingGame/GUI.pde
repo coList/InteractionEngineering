@@ -2,7 +2,8 @@ class GUI {
   int textSize = 40;
   int textColor = 255;
   int ellipsesSize = 20;
-
+  PFont largeFont = createFont("Arial", 400, true);
+  
   void render(Character character, Field field, boolean gameStarted) {
     camera(); //setze den viewport auf 2d zurück
     noLights();   
@@ -74,7 +75,8 @@ class GUI {
     camera();
     noLights();
     fill(textColor);
-    textSize(textSize * 10);
+    textFont(largeFont, 400);
+    textSize(400);
     text((int)timeLeft/1000, 100, height * 2/3);
     
   }
