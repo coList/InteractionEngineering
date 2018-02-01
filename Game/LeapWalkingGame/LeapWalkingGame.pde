@@ -22,7 +22,7 @@ boolean dataPrinted = false;
 float time = 0;
 
 
-float startTime = 5000;
+float startTime = 7000;
 boolean gameStarted = false;
 boolean gameStopped = false;
 
@@ -34,7 +34,7 @@ void setup() {
 
   field = new Field();
   field.render();
-  obstacleCreator = new ObstacleCreator(field.totalDistance);
+  obstacleCreator = new ObstacleCreator(field.totalDistance, field.fieldWidth);
 
   character = new Character(850, height/2+300, 0, obstacleCreator.obstacleDistance, obstacleCreator.obstacleBoxDepth);
   gui = new GUI();
@@ -49,6 +49,8 @@ void setup() {
   leap = new LeapMotion(this);
 
   dataPrinter = new DataPrinter("data.txt");
+
+  println("\n\n\nPress ENTER to change from right to left hand mode!");
 }
 
 
@@ -68,16 +70,18 @@ void draw() {
         directionChange.setDirection(character, hand);
 
         walking.setIsWalking(character, hand);
-        jumpDepthTranslation.updateDepthPosition(character, hand, gameStopped);
 
-        Arm arm = hand.getArm();
-        duckDepthTranslation.updateDepthPosition(character, arm, gameStopped);
-        
-        
-        
-        
+        if (gameStarted) {
+          jumpDepthTranslation.updateDepthPosition(character, hand, gameStopped);
+
+          Arm arm = hand.getArm();
+          duckDepthTranslation.updateDepthPosition(character, arm, gameStopped);
+        }
+
+
+
+
         gui.renderHand(hand);
-        
       }
     }
 
@@ -98,9 +102,17 @@ void draw() {
         releaseStopTime = millis() + 1000;
       }
     } else if (!gameStarted) {
+      boolean foundHand = false;
+      for (Hand hand : leap.getHands()) {
+        foundHand = true;
+      }
+
+
       float timeLeft = startTime - millis();
       if (timeLeft < 0) {
-        gameStarted = true;
+        if (foundHand) {
+          gameStarted = true;
+        }
       } else {
         gui.showStarter(timeLeft);
       }
@@ -111,7 +123,7 @@ void draw() {
     }
   } else {
     if (!dataPrinted) {
-      time = millis();
+      time = millis() - startTime;
       dataPrinted = true;
 
       dataPrinter.printData("TotalDistance: " + field.totalDistance + ";" + "Collisions: " + character.collisionsCount + ";" + "Time: " + time + ";" + "Jumps: " + jumpDepthTranslation.jumpCounter + ";" + "Ducks: " + duckDepthTranslation.duckCounter + ";");
@@ -119,7 +131,6 @@ void draw() {
     }
 
     gui.showEndScreen(character, time);
-   
   }
 }
 
@@ -131,12 +142,9 @@ void mousePressed() {
 }
 
 void keyPressed() {
-  //duckt sich
-  character.duck = !character.duck;
-
   if (keyCode == ENTER) {
     usingRightHand = !usingRightHand;
-  }
+  } 
 }
 
 public void exit() {  //save Data on Window exit

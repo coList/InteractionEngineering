@@ -2,7 +2,7 @@ class Character {
 
   PVector position;  //Mitte der Unterseite
   boolean duck = false;
-  boolean jump = true;
+  boolean jump = false;
   PVector direction;
   PVector speed;
   float autoMovementZ = -12;
@@ -207,10 +207,11 @@ class Character {
   }
   
   void calculateAutoMovementSpeed(int obstacleDepth, int obstacleDistance) {
-    float jumpingDistance = obstacleDepth + 0.75 * obstacleDistance;
+    float jumpingDistance = obstacleDepth + 0.8 * obstacleDistance;
        
     autoMovementZ = -1 * jumpingDistance/(autoMovementDuration/1000)/60;  // weg / (zeit in Sekunden) / Frames pro Sekunde = weg pro Frame
-  }
+    println(autoMovementZ);
+}
 
   void setCoordinates(float xPos, float yPos, float zPos) {
     position.set(xPos, yPos, zPos);

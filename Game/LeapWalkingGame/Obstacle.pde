@@ -2,7 +2,7 @@ class Obstacle {
   int lane;
   boolean high;
   PVector position; //Position: Mitte des Objektes
-  int boxWidth= 300;
+  int boxWidth;
   int boxHeight= 100;
   int boxDepth= 50;
   
@@ -13,13 +13,16 @@ class Obstacle {
   PVector positionPillar1;
   PVector positionPillar2;
 
-  Obstacle(int lane, boolean high, int zPos, int boxDepth) {   
+  Obstacle(int lane, boolean high, int zPos, int boxDepth, int fieldWidth) {   
     this.lane = lane;
     this.high= high;
+    boxWidth = fieldWidth/3;
+    this.boxDepth = boxDepth;
+    
     position = new PVector(calculateXPos(), 0, zPos);
     positionPillar1 = new PVector(-boxWidth/2+10, 175, 0);  //position nach dem ersten Translate
     positionPillar2 = new PVector(boxWidth/2-10, 175, 0);  //position nach dem ersten Translate
-    boxDepth = boxDepth;
+    
   }
 
   void render() {
@@ -50,6 +53,6 @@ class Obstacle {
   }
 
   int calculateXPos() {
-    return width/2-350+(this.lane*350);
+    return width/2-boxWidth+(this.lane*boxWidth);
   }
 }

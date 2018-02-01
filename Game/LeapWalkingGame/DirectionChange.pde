@@ -11,12 +11,18 @@ class DirectionChange {
     direction.rotate(HALF_PI);   //rotate the vector by 90degrees to get the perpendicular vector
 
     direction.normalize();
+    
+    if (hand.isLeft()) {
+      direction.mult(-1);
+    }
 
     if (direction.y > 0) {  //disable walking backwards
       direction.y = 0;
     }
 
     direction.set(direction.x, 0, direction.y);
+    
+    
 
     character.setDirection(direction);
   }

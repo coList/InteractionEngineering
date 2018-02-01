@@ -76,6 +76,7 @@ class GUI {
     fill(textColor);
     textSize(textSize * 10);
     text((int)timeLeft/1000, 100, height * 2/3);
+    
   }
 
   void showEndScreen(Character character, float time) {
