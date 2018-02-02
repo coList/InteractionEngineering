@@ -15,6 +15,7 @@ class DuckDepthTranslation {
       }     
       if (zIndex <= 15 && character.allowsJumpDuck && !gameStopped) {
         character.duck = true;
+        character.startJumpDuckMovement();
         duckCounter++;
       } else {
         character.duck = false;

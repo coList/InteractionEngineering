@@ -34,7 +34,7 @@ class Character {
     jumpPositionY = yPos - 200;
     speed = new PVector(0, 0, 0);
     direction = new PVector(0, 0, 0);
-    
+
     calculateAutoMovementSpeed(obstacleDepth, obstacleDistance);
   }
 
@@ -70,11 +70,11 @@ class Character {
       position.z += autoMovementZ;
       cameraEyeZ += autoMovementZ;
       cameraCenterZ += autoMovementZ;
-      
+
       if (autoMovementStartTime + autoMovementDuration <= millis()) {  //stop jumping, stop ducking
         autoMovement = false;
+        println("stop");
       }
-      
     } else if (isWalking) {
       position.x += speed.x;
       position.z += speed.z;
@@ -84,29 +84,28 @@ class Character {
       } else if (position.x >= width - 300 - currentBoxWidth/2) {
         position.x = width - 300 - currentBoxWidth/2;
       }
-      
+
 
       cameraEyeZ += character.speed.z;
       cameraCenterZ += character.speed.z;
-    } else if ((jump || duck) && !autoMovement) {
-       autoMovement = true;
-       allowsJumpDuck = false;
-       position.z += autoMovementZ;
-      cameraEyeZ += autoMovementZ;
-      cameraCenterZ += autoMovementZ;
-       autoMovementStartTime = millis();
-    }
-    
+    } 
+
     if (autoMovementStartTime + autoMovementDuration + allowJumpDuckAgainTime <= millis()) {
       allowsJumpDuck = true;
     }
   }
   
+  void startJumpDuckMovement() {
+    autoMovement = true;
+    allowsJumpDuck = false;
+    autoMovementStartTime = millis();
+  }
+
   boolean reachedEnd(float totalDistance) {
-      if (position.z <= -totalDistance) {
-        return true;
-      }
-      return false;
+    if (position.z <= -totalDistance) {
+      return true;
+    }
+    return false;
   }
 
   boolean collisionObstacle(Obstacle obstacle) {
@@ -183,7 +182,7 @@ class Character {
       cameraCenterZ += 150;
 
       collisionsCount++;
-      
+
       return true;
     }
     return false;
@@ -205,13 +204,12 @@ class Character {
     speed = direction.copy();
     speed.mult(speedValue * 3);
   }
-  
+
   void calculateAutoMovementSpeed(int obstacleDepth, int obstacleDistance) {
     float jumpingDistance = obstacleDepth + 0.8 * obstacleDistance;
-       
+
     autoMovementZ = -1 * jumpingDistance/(autoMovementDuration/1000)/60;  // weg / (zeit in Sekunden) / Frames pro Sekunde = weg pro Frame
-    println(autoMovementZ);
-}
+  }
 
   void setCoordinates(float xPos, float yPos, float zPos) {
     position.set(xPos, yPos, zPos);

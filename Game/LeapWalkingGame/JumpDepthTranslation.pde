@@ -15,9 +15,8 @@ class JumpDepthTranslation {
       zMiddle -= 60;
       zMiddle = -zMiddle;
       
-    
-
       if (zIndex > 20 && zMiddle > 20 && character.allowsJumpDuck && !gameStopped) {
+        character.startJumpDuckMovement();
         character.jump = true;
         jumpCounter++;
       } else {
