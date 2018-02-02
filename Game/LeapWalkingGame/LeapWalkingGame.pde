@@ -1,3 +1,12 @@
+//Corinna List, Daniela Neupert
+//Leap Walking - Gesture Based Walking
+
+//Hochschule Augsburg, University of Applied Sciences
+//Winter semester 17/18
+//Interaction Engineering
+//Prof. Dr. Michael Kipp
+
+
 import de.voidplus.leapmotion.*;
 
 ObstacleCreator obstacleCreator;
