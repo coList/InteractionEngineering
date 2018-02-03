@@ -2,3 +2,4 @@ TotalDistance: 10000;Collisions: 1;Time: 21598.0;Jumps: 94;Ducks: 2;
 TotalDistance: 10000;Collisions: 10;Time: 46375.0;Jumps: 113;Ducks: 3;
 TotalDistance: 10000;Collisions: 0;Time: 17734.0;Jumps: 4;Ducks: 2;
 TotalDistance: 10000;Collisions: 2;Time: 20806.0;Jumps: 2;Ducks: 3;
+TotalDistance: 10000;Collisions: 3;Time: 46070.0;Jumps: 4;Ducks: 1;
